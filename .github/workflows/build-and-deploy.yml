@@ -7,7 +7,6 @@ on:
 
 env:
   DOWNLOAD_RELEASE_TEMP_PATH: ${{ github.workspace }}/modloader-temp          # 下载的 ModLoader 解压到这里
-  UPLOAD_ARTIFACT_TEMP_PATH: ${{ github.workspace }}/modloader-processed-temp # 上传的文件放在这里
   MODLOADER_HTML_FILENAME: "Degrees of Lewdity VERSION.html.mod.html"         # ModLoader 的 HTML 文件名
   I18NMOD_FILENAME: "ModI18N.mod.zip"                                         # I18N 的压缩包名
   UPLOAD_ARTIFACT_NAME: "ModLoader-Artifact"                                  # 上传的文件名
@@ -21,7 +20,6 @@ jobs:
       - name: Make Directories
         run: |
           mkdir -p "${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}/mods"
-          mkdir -p "${{ env.UPLOAD_ARTIFACT_TEMP_PATH }}"
 
       - id: getI18NRelease
         name: Download I18N Mod
@@ -85,6 +83,11 @@ jobs:
             manifest_file.seek(0)
             manifest_file.truncate()
             manifest_file.write(json.dumps(manifest_json, indent=2))
+
+      - name: Check Filelist
+        run: |
+          echo "filelist: "
+          echo ls ${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}
 
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v3
