@@ -121,12 +121,12 @@ jobs:
           keep_history: false
           target_branch: gh-pages
 
-  post-build:
-    runs-on: ubuntu-latest
-    if: ${{ always() }}
-    needs: [build, deploy-github]
-    steps:
-      - name: Cleanup
-        uses: geekyeggo/delete-artifact@v2
-        with:
-          name: ${{ env.UPLOAD_ARTIFACT_NAME }}
+#  post-build:
+#    runs-on: ubuntu-latest
+#    if: ${{ always() }}
+#    needs: [build, deploy-github]
+#    steps:
+#      - name: Cleanup
+#        uses: geekyeggo/delete-artifact@v2
+#        with:
+#          name: ${{ env.UPLOAD_ARTIFACT_NAME }}
