@@ -6,11 +6,11 @@ on:
   workflow_dispatch:
 
 env:
-  DOWNLOAD_RELEASE_TEMP_PATH: ${{ github.workspace }}/modloader-temp
-  UPLOAD_ARTIFACT_TEMP_PATH: ${{ github.workspace }}/modloader-processed-temp
-  MODLOADER_HTML_FILENAME: "Degrees of Lewdity VERSION.html.mod.html"
-  I18NMOD_FILENAME: "ModI18N.mod.zip"
-  UPLOAD_ARTIFACT_NAME: "ModLoader-Artifact"
+  DOWNLOAD_RELEASE_TEMP_PATH: ${{ github.workspace }}/modloader-temp          # 下载的 ModLoader 解压到这里
+  UPLOAD_ARTIFACT_TEMP_PATH: ${{ github.workspace }}/modloader-processed-temp # 上传的文件放在这里
+  MODLOADER_HTML_FILENAME: "Degrees of Lewdity VERSION.html.mod.html"         # ModLoader 的 HTML 文件名
+  I18NMOD_FILENAME: "ModI18N.mod.zip"                                         # I18N 的压缩包名
+  UPLOAD_ARTIFACT_NAME: "ModLoader-Artifact"                                  # 上传的文件名
 
 jobs:
   build:
@@ -44,15 +44,15 @@ jobs:
           unzip -q ${{ fromJson(steps.getModLoaderRelease.outputs.downloaded_files)[0] }} -d ${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}
 
       - name: Create Remote Mod Loading env
-        working-directory: ${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}
         run: |
           echo '["mods/${{ env.I18NMOD_FILENAME }}"]' > "${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}/modList.json"
           mv "${{ fromJson(steps.getI18NRelease.outputs.downloaded_files)[0] }}" "${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}/mods/${{ env.I18NMOD_FILENAME }}"
+          ls -ld ${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}
 
       - name: Construct PWA
         run: |
           cp -r .github/pwa/* ${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}
-          mv "${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}/${{ env.MODLOADER_HTML_FILENAME }}" ${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}/index.html
+          mv "${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}/${{ env.MODLOADER_HTML_FILENAME }}" "${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}/index.html"
 
       - name: Modify HTML
         shell: python3 {0}
@@ -76,6 +76,7 @@ jobs:
       - name: Pack Artifact
         run: |
           7z a ${{ env.UPLOAD_ARTIFACT_TEMP_PATH }} ${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}/*
+          ls -ld ${{ env.UPLOAD_ARTIFACT_TEMP_PATH }}
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
