@@ -74,7 +74,7 @@ jobs:
 
       - name: Pack Artifact
         working-directory: ${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}
-        run: zip -q -r ${{ env.UPLOAD_ARTIFACT_TEMP_PATH }}/${{ env.UPLOAD_ARTIFACT_NAME }}.zip ./*
+        run: zip -q -rj ${{ env.UPLOAD_ARTIFACT_TEMP_PATH }}/${{ env.UPLOAD_ARTIFACT_NAME }}.zip ./*
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
