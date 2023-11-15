@@ -72,19 +72,11 @@ jobs:
             index_html_file.truncate()
             index_html_file.write(index_html)
 
-      - name: Pack Artifact
-        run: |
-          7z a ${{ env.UPLOAD_ARTIFACT_TEMP_PATH }} -r ${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}/*
-          echo "${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}"
-          ls ${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}
-          echo "${{ env.UPLOAD_ARTIFACT_TEMP_PATH }}"
-          ls ${{ env.UPLOAD_ARTIFACT_TEMP_PATH }}
-
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.UPLOAD_ARTIFACT_NAME }}
-          path: ${{ env.UPLOAD_ARTIFACT_TEMP_PATH }}
+          path: ${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}
 
 
 
@@ -101,6 +93,10 @@ jobs:
 
       - name: Unzip Artifact
         run: |
+          echo ${{ env.UPLOAD_ARTIFACT_TEMP_PATH }}
+          echo ls ${{ env.UPLOAD_ARTIFACT_TEMP_PATH }}
+          echo ${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}
+          echo ls ${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}
           unzip -q ${{ env.UPLOAD_ARTIFACT_TEMP_PATH }} -d ${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}
 
       - name: Modify manifest.json
@@ -126,13 +122,13 @@ jobs:
           keep_history: false
           target_branch: gh-pages
 
-  post-build:
-    runs-on: ubuntu-latest
-    if: ${{ always() }}
-    #    needs: [build, deploy-github, deploy-netlify]
-    needs: [build, deploy-github]
-    steps:
-      - name: Cleanup
-        uses: geekyeggo/delete-artifact@v2
-        with:
-          name: ${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}
+#  post-build:
+#    runs-on: ubuntu-latest
+#    if: ${{ always() }}
+#    #    needs: [build, deploy-github, deploy-netlify]
+#    needs: [build, deploy-github]
+#    steps:
+#      - name: Cleanup
+#        uses: geekyeggo/delete-artifact@v2
+#        with:
+#          name: ${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}
