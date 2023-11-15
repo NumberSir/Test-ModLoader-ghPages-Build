@@ -52,7 +52,7 @@ jobs:
       - name: Construct PWA
         run: |
           cp -r .github/pwa/* ${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}
-          mv "${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}/{{ env.MODLOADER_HTML_FILENAME }}" ${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}/index.html
+          mv "${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}/${{ env.MODLOADER_HTML_FILENAME }}" ${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}/index.html
 
       - name: Modify HTML
         shell: python3 {0}
