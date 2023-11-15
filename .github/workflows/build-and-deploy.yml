@@ -40,16 +40,19 @@ jobs:
       - name: Extract Modloader Build
         run: |
           unzip -q ${{ fromJson(steps.getModLoaderRelease.outputs.downloaded_files)[0] }} -d ${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}
+          echo ls ${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}
 
       - name: Create Remote Mod Loading env
         run: |
           echo '["mods/${{ env.I18NMOD_FILENAME }}"]' > "${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}/modList.json"
           mv "${{ fromJson(steps.getI18NRelease.outputs.downloaded_files)[0] }}" "${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}/mods/${{ env.I18NMOD_FILENAME }}"
+          echo ls ${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}/mods
 
       - name: Construct PWA
         run: |
           cp -r .github/pwa/* ${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}
           mv "${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}/${{ env.MODLOADER_HTML_FILENAME }}" "${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}/index.html"
+          echo ls ${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}
 
       - name: Modify HTML
         shell: python3 {0}
