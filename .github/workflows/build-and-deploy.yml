@@ -6,10 +6,10 @@ on:
   workflow_dispatch:
 
 env:
-  DOWNLOAD_RELEASE_TEMP_PATH: ${{ github.workspace }}/modloader-temp          # 下载的 ModLoader 解压到这里
-  MODLOADER_HTML_FILENAME: "Degrees of Lewdity VERSION.html.mod.html"         # ModLoader 的 HTML 文件名
-  I18NMOD_FILENAME: "ModI18N.mod.zip"                                         # I18N 的压缩包名
-  UPLOAD_ARTIFACT_NAME: "ModLoader-Artifact"                                  # 上传的文件名
+  DOWNLOAD_RELEASE_TEMP_PATH: ${{ github.workspace }}/modloader-temp
+  MODLOADER_HTML_FILENAME: "Degrees of Lewdity VERSION.html.mod.html"
+  I18NMOD_FILENAME: "ModI18N.mod.zip"
+  UPLOAD_ARTIFACT_NAME: "ModLoader-Artifact"
 
 jobs:
   build-and-deploy:
