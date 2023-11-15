@@ -47,7 +47,7 @@ jobs:
         run: |
           echo '["mods/${{ env.I18NMOD_FILENAME }}"]' > "${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}/modList.json"
           mv "${{ fromJson(steps.getI18NRelease.outputs.downloaded_files)[0] }}" "${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}/mods/${{ env.I18NMOD_FILENAME }}"
-          ls -ld ${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}
+          ls ${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}
 
       - name: Construct PWA
         run: |
@@ -76,7 +76,7 @@ jobs:
       - name: Pack Artifact
         run: |
           7z a ${{ env.UPLOAD_ARTIFACT_TEMP_PATH }} ${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}/*
-          ls -ld ${{ env.UPLOAD_ARTIFACT_TEMP_PATH }}
+          ls ${{ env.UPLOAD_ARTIFACT_TEMP_PATH }}
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
