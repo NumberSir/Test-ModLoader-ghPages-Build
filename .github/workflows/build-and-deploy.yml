@@ -18,6 +18,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Make Directories
+        run: |
+          mkdir -p "${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}/mods"
+          mkdir -p "${{ env.UPLOAD_ARTIFACT_TEMP_PATH }}"
+
       - id: getI18NRelease
         name: Download I18N Mod
         uses: robinraju/release-downloader@v1.8
