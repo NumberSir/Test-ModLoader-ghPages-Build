@@ -94,8 +94,9 @@ jobs:
           name: ${{ env.UPLOAD_ARTIFACT_NAME }}
 
       - name: Extract Artifact
+        working-directory: ${{ github.workspace }}
         run: |
-          unzip -q ${{ env.UPLOAD_ARTIFACT_FILEPATH }} -d ${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}
+          unzip -q ${{ env.UPLOAD_ARTIFACT_FILEPATH }} -d ./modloader-temp
 
       - name: Modify manifest.json
         shell: python3 {0}
