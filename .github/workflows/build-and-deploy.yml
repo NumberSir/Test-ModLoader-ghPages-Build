@@ -89,7 +89,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Download Artifact
-        uses: aactions/download-artifact@v3
+        uses: actions/download-artifact@v3
         with:
           name: ${{ env.UPLOAD_ARTIFACT_NAME }}
 
@@ -123,7 +123,6 @@ jobs:
   post-build:
     runs-on: ubuntu-latest
     if: ${{ always() }}
-    #    needs: [build, deploy-github, deploy-netlify]
     needs: [build, deploy-github]
     steps:
       - name: Cleanup
