@@ -117,7 +117,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          build_dir: ${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}
+          build_dir: ./modloader-temp
           keep_history: false
           target_branch: gh-pages
 
