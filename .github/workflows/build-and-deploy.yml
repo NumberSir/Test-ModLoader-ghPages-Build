@@ -72,12 +72,14 @@ jobs:
             index_html_file.truncate()
             index_html_file.write(index_html)
 
+      - name: Pack Artifact
+        run: zip -q -r ${{ env.UPLOAD_ARTIFACT_TEMP_PATH }}/${{ env.UPLOAD_ARTIFACT_NAME }}.zip ${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.UPLOAD_ARTIFACT_NAME }}
-          path: ${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}
-
+          path: ${{ env.UPLOAD_ARTIFACT_TEMP_PATH }}
 
 
   deploy-github:
@@ -93,11 +95,11 @@ jobs:
 
       - name: Unzip Artifact
         run: |
+          unzip -q ${{ env.UPLOAD_ARTIFACT_TEMP_PATH }} -d ${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}
           echo ${{ env.UPLOAD_ARTIFACT_TEMP_PATH }}
           echo ls ${{ env.UPLOAD_ARTIFACT_TEMP_PATH }}
           echo ${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}
           echo ls ${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}
-          unzip -q ${{ env.UPLOAD_ARTIFACT_TEMP_PATH }} -d ${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}
 
       - name: Modify manifest.json
         shell: python3 {0}
