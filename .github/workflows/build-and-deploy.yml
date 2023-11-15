@@ -73,7 +73,8 @@ jobs:
             index_html_file.write(index_html)
 
       - name: Pack Artifact
-        run: zip -q -r ${{ env.UPLOAD_ARTIFACT_TEMP_PATH }}/${{ env.UPLOAD_ARTIFACT_NAME }}.zip ${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}
+        working-directory: ${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}
+        run: zip -q -r ${{ env.UPLOAD_ARTIFACT_TEMP_PATH }}/${{ env.UPLOAD_ARTIFACT_NAME }}.zip ./*
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
