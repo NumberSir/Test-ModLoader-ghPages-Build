@@ -7,8 +7,11 @@ on:
 
 env:
   DOWNLOAD_RELEASE_TEMP_PATH: ${{ github.workspace }}/modloader-temp
-  MODLOADER_HTML_FILENAME: "Degrees of Lewdity VERSION.html.mod-polyfill.html"
+#  MODLOADER_HTML_FILENAME: "Degrees of Lewdity VERSION.html.mod-polyfill.html"
   I18NMOD_FILENAME: "ModI18N.mod.zip"
+
+  MODLOADER_HTML_NORMAL_FILENAME: "Degrees of Lewdity VERSION.html.mod.html"
+  MODLOADER_HTML_POLYFILL_FILENAME: "Degrees of Lewdity VERSION.html.mod-polyfill.html"
 
   UPLOAD_ARTIFACT_NAME: "ModLoader-Artifact"
   UPLOAD_ARTIFACT_FILEPATH: ${{ github.workspace }}/Modloader-Artifact.zip
@@ -51,7 +54,7 @@ jobs:
       - name: Construct PWA
         run: |
           cp -r .github/pwa/* ${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}
-          mv "${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}/${{ env.MODLOADER_HTML_FILENAME }}" "${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}/index.html"
+#          mv "${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}/${{ env.MODLOADER_HTML_FILENAME }}" "${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}/index.html"
 
       - name: Modify HTML
         shell: python3 {0}
