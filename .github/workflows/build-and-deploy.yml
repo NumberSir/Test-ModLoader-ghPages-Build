@@ -54,8 +54,6 @@ jobs:
       - name: Construct PWA
         run: |
           cp -r .github/pwa/* ${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}
-#          mv "${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}/${{ env.MODLOADER_HTML_FILENAME }}" "${{ env.DOWNLOAD_RELEASE_TEMP_PATH }}/index.html"
-
       - name: Modify HTML
         shell: python3 {0}
         run: |
@@ -64,7 +62,6 @@ jobs:
             insert_index = index_html.find('<meta charset="UTF-8" />')
             index_html = index_html[:insert_index] + \
                 "<link rel=\"manifest\" href=\"manifest.json\">\n" + index_html[insert_index:]
-#            insert_index = index_html.find('<body>\n\t<div id="init-screen">') + 7
             insert_index = index_html.find('<body>') + 7
             index_html = index_html[:insert_index] + \
                 "    <script>\n" + \
