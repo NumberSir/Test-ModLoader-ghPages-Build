@@ -7,7 +7,7 @@ on:
 
 env:
   DOWNLOAD_RELEASE_TEMP_PATH: ${{ github.workspace }}/modloader-temp
-  MODLOADER_HTML_FILENAME: "Degrees of Lewdity VERSION.html.mod.html"
+  MODLOADER_HTML_FILENAME: "Degrees of Lewdity VERSION.html.mod-polyfill.html"
   I18NMOD_FILENAME: "ModI18N.mod.zip"
 
   UPLOAD_ARTIFACT_NAME: "ModLoader-Artifact"
@@ -29,7 +29,7 @@ jobs:
         with:
           repository: "NumberSir/DoL-I18n-Build"
           latest: true
-          fileName: "ModI18N.mod.zip"
+          fileName: "ModI18N-*.mod.zip"
 
       - id: getModLoaderRelease
         name: Download ModLoader Build
@@ -117,16 +117,16 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          build_dir: ./modloader-temp
+          build_dir: ./modloader-temp  # 注意这里只能用相对路径，吐血了差点
           keep_history: false
           target_branch: gh-pages
 
-#  post-build:
-#    runs-on: ubuntu-latest
-#    if: ${{ always() }}
-#    needs: [build, deploy-github]
-#    steps:
-#      - name: Cleanup
-#        uses: geekyeggo/delete-artifact@v2
-#        with:
-#          name: ${{ env.UPLOAD_ARTIFACT_NAME }}
+  post-build:
+    runs-on: ubuntu-latest
+    if: ${{ always() }}
+    needs: [build, deploy-github]
+    steps:
+      - name: Cleanup
+        uses: geekyeggo/delete-artifact@v2
+        with:
+          name: ${{ env.UPLOAD_ARTIFACT_NAME }}
