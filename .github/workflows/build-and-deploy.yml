@@ -64,7 +64,8 @@ jobs:
             insert_index = index_html.find('<meta charset="UTF-8" />')
             index_html = index_html[:insert_index] + \
                 "<link rel=\"manifest\" href=\"manifest.json\">\n" + index_html[insert_index:]
-            insert_index = index_html.find('<body>\n\t<div id="init-screen">') + 7
+#            insert_index = index_html.find('<body>\n\t<div id="init-screen">') + 7
+            insert_index = index_html.find('<body>') + 7
             index_html = index_html[:insert_index] + \
                 "    <script>\n" + \
                 "        if (typeof navigator.serviceWorker !== 'undefined') {\n" + \
